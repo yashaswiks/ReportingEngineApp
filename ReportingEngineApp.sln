@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportingEngineAppUI", "ReportingEngineAppUI\ReportingEngineAppUI.csproj", "{DFD6D102-95B4-405A-A90F-1402C07EC04C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportingEngineAppUI", "ReportingEngineAppUI\ReportingEngineAppUI.csproj", "{DFD6D102-95B4-405A-A90F-1402C07EC04C}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ReportingEngineDb", "ReportingEngineDb\ReportingEngineDb.sqlproj", "{72E63BBD-D673-4ABA-B740-76435CE76FF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportingEngineLibrary", "ReportingEngineLibrary\ReportingEngineLibrary.csproj", "{52758B3D-C135-4FA0-A548-125BF2561A9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportingEngineLibrary", "ReportingEngineLibrary\ReportingEngineLibrary.csproj", "{52758B3D-C135-4FA0-A548-125BF2561A9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

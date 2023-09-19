@@ -1,5 +1,7 @@
 using ReportingEngineAppUI.Data;
 using ReportingEngineLibrary.Data;
+using ReportingEngineLibrary.Repository;
+using ReportingEngineLibrary.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,8 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
 builder.Services.AddScoped<ISqlDataAccess, SqlDataAccess>();
+builder.Services.AddScoped<IReportEngineReportParameterMappingRepository, ReportEngineReportParameterMappingRepository>();
+builder.Services.AddScoped<IReportingEngineReportsRepository, ReportingEngineReportsRepository>();
 
 var app = builder.Build();
 

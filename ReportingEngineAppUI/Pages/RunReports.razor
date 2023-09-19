@@ -1,0 +1,64 @@
+﻿@page "/run-report/{ReportId:int}"
+@using ReportingEngineLibrary.Models;
+@using ReportingEngineLibrary.Repository.IRepository;
+
+<h3>Run Reports</h3>
+
+@if (Parameters?.Count > 0)
+{
+    <div class="col-md-6">
+        @foreach (var param in Parameters)
+        {
+        <div class="form-group">
+            <label>@param.ParameterLabel</label>
+            <input class="form-control" @bind-value="param.ParameterValue" type="@param.DataType" />
+        </div>
+        }
+    </div>
+
+}
+
+<button @onclick="Test">Test</button>
+
+@code {
+    [Parameter]
+    public int? ReportId { get; set; }
+    [Inject]
+    public IReportEngineReportParameterMappingRepository? _reportParameterMappingRepository { get; set; }
+    [Inject]
+    public IReportingEngineReportsRepository _reportsEngine { get; set; }
+
+
+    public List<FullReportEngineReportParameterMappingModel>? ReportParameters { get; set; } = new();
+    public List<ReportParameters> Parameters { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ReportParameters = await _reportParameterMappingRepository?
+        .GetReportParametersByReportIdAsync(ReportId);
+
+        if(ReportParameters?.Count > 0)
+        {
+            Parameters = new();
+            foreach(var item in ReportParameters)
+            {
+
+                Parameters.Add(new ReportParameters()
+                {
+
+                    ReportId = (int)item.ReportId,
+                    ParameterVariable = item.Parameter?.ParameterVariable,
+                    ParameterLabel = item.Parameter?.ParameterLabel,
+                    DataType = item.Parameter?.FormatType
+                });
+            }
+        }
+    }
+
+    public async Task Test()
+    {
+        var test = Parameters;
+        await _reportsEngine.Test(ReportId, Parameters);
+    }
+
+}

@@ -1,0 +1,48 @@
+﻿@page "/reports/all"
+@using ReportingEngineLibrary.Repository.IRepository;
+@using ReportingEngineLibrary.TableModels;
+<h3>Reports</h3>
+
+@if(AllReports?.Count > 0)
+{
+    @foreach(var report in AllReports)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Report Name</th>
+                    <th scope="col">Report Category</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">View</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@report?.ReportName</td>
+                    <td>@report?.ReportCategory</td>
+                    <td>@report?.Description</td>
+                    <td><button class="btn btn-link" type="button" @onclick="() => ViewReport(report?.Id)">Run Report</button></td>
+                </tr>
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    [Inject]
+    public IReportingEngineReportsRepository? _reportingEngineReportsRepository { get; set; }
+    [Inject]
+    public NavigationManager? _navigationManager { get; set; }
+    public List<ReportingEngineReports?>? AllReports { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        AllReports = await _reportingEngineReportsRepository.GetAllAsync();
+    }
+
+    private void ViewReport(int? reportId)
+    {
+        _navigationManager.NavigateTo($"/run-report/{reportId}");
+    }
+
+}
