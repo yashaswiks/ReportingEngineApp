@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportingEngineAppUI", "Rep
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ReportingEngineDb", "ReportingEngineDb\ReportingEngineDb.sqlproj", "{72E63BBD-D673-4ABA-B740-76435CE76FF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportingEngineLibrary", "ReportingEngineLibrary\ReportingEngineLibrary.csproj", "{52758B3D-C135-4FA0-A548-125BF2561A9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{72E63BBD-D673-4ABA-B740-76435CE76FF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72E63BBD-D673-4ABA-B740-76435CE76FF1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{72E63BBD-D673-4ABA-B740-76435CE76FF1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{52758B3D-C135-4FA0-A548-125BF2561A9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52758B3D-C135-4FA0-A548-125BF2561A9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52758B3D-C135-4FA0-A548-125BF2561A9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52758B3D-C135-4FA0-A548-125BF2561A9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
