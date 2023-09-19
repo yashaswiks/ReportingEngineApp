@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace ReportingEngineLibrary.Data;
 
-public class SqlDataAccess
+public class SqlDataAccess : ISqlDataAccess
 {
     private readonly IConfiguration _config;
 
@@ -15,12 +15,12 @@ public class SqlDataAccess
         _config = configuration;
     }
 
-    public async Task InsertCustomerDetails(InsertCustomerDetailsModel customerDetails, 
+    public async Task InsertCustomerDetails(InsertCustomerDetailsModel customerDetails,
         string connectionString = "DefaultConnection")
     {
         using IDbConnection _db = new SqlConnection(_config.GetConnectionString(connectionString));
-        await _db.ExecuteAsync("dbo.sp_InsertCustomerDetails", 
-            param: customerDetails, 
+        await _db.ExecuteAsync("dbo.sp_InsertCustomerDetails",
+            param: customerDetails,
             commandType: CommandType.StoredProcedure);
 
     }

@@ -1,6 +1,53 @@
 ﻿@page "/insertcustomerdetails"
+@using ReportingEngineLibrary.Data;
+@using ReportingEngineLibrary.Models;
 <h3>Insert Customer Details</h3>
 
+<EditForm Model="InsertCustomerDetailsModel" OnSubmit="Submit">
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        <InputText id="firstName" 
+            @bind-Value="InsertCustomerDetailsModel.FirstName" 
+            class="form-control"></InputText>
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <InputText id="lastName"
+        @bind-Value="InsertCustomerDetailsModel.LastName"
+                   class="form-control"></InputText>
+    </div>
+    <div class="form-group">
+        <label for="customerDateOfBirth">Date of Birth</label>
+        <InputDate id="customerDateOfBirth" 
+            @bind-Value="InsertCustomerDetailsModel.DateOfBirth" 
+            class="form-control"></InputDate>
+    </div>
+    <div class="form-group">
+        <label for="address">Address</label>
+        <InputText id="address" @bind-Value="InsertCustomerDetailsModel.Address" 
+        class="form-control"></InputText>
+    </div>
+    <div class="form-group">
+        <label for="zipCode">ZipCode</label>
+        <InputText id="zipCode" @bind-Value="InsertCustomerDetailsModel.ZipCode"
+                   class="form-control"></InputText>
+    </div>
+    <div class="form-group">
+        <label for="state">State</label>
+        <InputText id="state" @bind-Value="InsertCustomerDetailsModel.State"
+                   class="form-control"></InputText>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
 @code {
+    [Inject]
+    public ISqlDataAccess _sqlDataAccess { get; set; }
+    public InsertCustomerDetailsModel InsertCustomerDetailsModel { get; set; } = new();
+
+    private async Task Submit()
+    {
+        await _sqlDataAccess.InsertCustomerDetails(InsertCustomerDetailsModel);
+    }
 
 }
