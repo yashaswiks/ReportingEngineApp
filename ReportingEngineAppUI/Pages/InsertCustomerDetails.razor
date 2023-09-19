@@ -1,8 +1,9 @@
 ﻿@page "/insertcustomerdetails"
 @using ReportingEngineLibrary.Data;
 @using ReportingEngineLibrary.Models;
-<h3>Insert Customer Details</h3>
+@using ReportingEngineLibrary;
 
+<h4>Insert Customer Details</h4>
 <EditForm Model="InsertCustomerDetailsModel" OnSubmit="Submit">
     <div class="form-group">
         <label for="firstName">First Name</label>
@@ -40,14 +41,85 @@
     <button type="submit" class="btn btn-primary">Submit</button>
 </EditForm>
 
+<h4>Insert Bogus Data</h4>
+<div class="form-group">
+    <label for="state">Number Of Records</label>
+    <input type="number" @bind-value="NumberOfRecords" />
+    <button type="button" @onclick="GenerateBogusData" class="btn btn-primary">Generate Bogus Data</button>
+    <button type="submit" @onclick="SaveBogusData" class="btn btn-primary">Save</button>
+    @if(IsBogusRecordsBeingInserted)
+    {
+        <p>Bogus Records Inserted: @BogusRecordsInserted</p>
+    }
+</div>
+
+@if(BogusData?.Count > 0)
+{
+    <p>Bogus Records Count: @BogusData?.Count</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Date Of Birth</th>
+                <th>Address</th>
+                <th>Zip Code</th>
+                <th>State</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var bogusData in BogusData)
+            {
+                <tr>
+                    <td>@bogusData.FirstName</td>
+                    <td>@bogusData.LastName</td>
+                    <td>@bogusData.DateOfBirth</td>
+                    <td>@bogusData.Address</td>
+                    <td>@bogusData.ZipCode</td>
+                    <td>@bogusData.State</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 @code {
     [Inject]
-    public ISqlDataAccess _sqlDataAccess { get; set; }
+    public ISqlDataAccess? _sqlDataAccess { get; set; }
     public InsertCustomerDetailsModel InsertCustomerDetailsModel { get; set; } = new();
+    public List<InsertCustomerDetailsModel> BogusData { get; set; } = new();
+    public int NumberOfRecords { get; set; } = 1000;
+    public int BogusRecordsInserted { get; set; } = 0;
+    public bool IsBogusRecordsBeingInserted { get; set; } = false;
+
+
 
     private async Task Submit()
     {
-        await _sqlDataAccess.InsertCustomerDetails(InsertCustomerDetailsModel);
+        await _sqlDataAccess!.InsertCustomerDetails(InsertCustomerDetailsModel);
+    }
+
+    private async Task SaveBogusData()
+    {
+        if(BogusData?.Count > 0)
+        {
+            IsBogusRecordsBeingInserted = true;
+            StateHasChanged();
+            BogusRecordsInserted = 0;
+            foreach(var bogusData in BogusData)
+            {
+                await _sqlDataAccess!.InsertCustomerDetails(bogusData);
+                BogusRecordsInserted++;
+            }
+        }
+        IsBogusRecordsBeingInserted = false;
+        StateHasChanged();
+    }
+
+    private void GenerateBogusData()
+    {
+        BogusData = new();
+        BogusData = new GenerateBogusData().GetBogusData(NumberOfRecords);
     }
 
 }
