@@ -65,6 +65,9 @@
     <Build Include="dbo\Tables\Customers.sql" />
     <Build Include="dbo\Tables\Address.sql" />
     <Build Include="dbo\Stored Procedures\sp_InsertCustomerDetails.sql" />
+    <Build Include="dbo\Tables\ReportingEngine_Parameter.sql" />
+    <Build Include="dbo\Tables\ReportingEngine_Reports.sql" />
+    <Build Include="dbo\Tables\ReportEngine_ReportParameterMapping.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ReportingEngineDb.refactorlog" />
