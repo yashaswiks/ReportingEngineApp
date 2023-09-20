@@ -45,7 +45,6 @@ public class ReportingEngineReportsRepository : IReportingEngineReportsRepositor
 
     public async Task<string> Test(int? reportId, List<ReportParameters> reportParameters)
     {
-        if (reportParameters?.Count == 0) return null;
         var reportDetails = await GetByReportId(reportId);
         if (reportDetails is null) return null;
 
@@ -53,13 +52,17 @@ public class ReportingEngineReportsRepository : IReportingEngineReportsRepositor
         if (sql is null) return null;
 
         var param = new DynamicParameters();
-        foreach (var parameter in reportParameters!)
+        if(reportParameters?.Count > 0)
         {
-            if (parameter.DataType == ParameterFormatType.Date_Type)
-                param.Add(parameter.ParameterVariable, DateTime.Parse(parameter.ParameterValue));
-            else
-                param.Add(parameter.ParameterVariable, parameter.ParameterValue);
+            foreach (var parameter in reportParameters!)
+            {
+                if (parameter.DataType == ParameterFormatType.Date_Type)
+                    param.Add(parameter.ParameterVariable, DateTime.Parse(parameter.ParameterValue));
+                else
+                    param.Add(parameter.ParameterVariable, parameter.ParameterValue);
+            }
         }
+
 
         using IDbConnection _db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
