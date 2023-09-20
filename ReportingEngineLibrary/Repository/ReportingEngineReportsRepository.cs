@@ -43,7 +43,7 @@ public class ReportingEngineReportsRepository : IReportingEngineReportsRepositor
         return details;
     }
 
-    public async Task<string> Test(int? reportId, List<ReportParameters> reportParameters)
+    public async Task<string> GetReportAsCsv(int? reportId, List<ReportParameters> reportParameters)
     {
         var reportDetails = await GetByReportId(reportId);
         if (reportDetails is null) return null;
@@ -52,7 +52,7 @@ public class ReportingEngineReportsRepository : IReportingEngineReportsRepositor
         if (sql is null) return null;
 
         var param = new DynamicParameters();
-        if(reportParameters?.Count > 0)
+        if (reportParameters?.Count > 0)
         {
             foreach (var parameter in reportParameters!)
             {
@@ -62,7 +62,6 @@ public class ReportingEngineReportsRepository : IReportingEngineReportsRepositor
                     param.Add(parameter.ParameterVariable, parameter.ParameterValue);
             }
         }
-
 
         using IDbConnection _db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 

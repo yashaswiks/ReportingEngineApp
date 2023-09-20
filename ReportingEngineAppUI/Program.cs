@@ -13,6 +13,7 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddScoped<IReportEngineReportParameterMappingRepository, ReportEngineReportParameterMappingRepository>();
 builder.Services.AddScoped<IReportingEngineReportsRepository, ReportingEngineReportsRepository>();
+builder.Services.AddScoped<IReportingEngineParameterRepository, ReportingEngineParameterRepository>();
 
 var app = builder.Build();
 

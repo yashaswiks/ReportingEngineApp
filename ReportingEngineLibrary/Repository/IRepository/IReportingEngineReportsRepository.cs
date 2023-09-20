@@ -9,5 +9,5 @@ public interface IReportingEngineReportsRepository
 
     Task<List<ReportingEngineReports>?> GetAllAsync();
 
-    Task<string> Test(int? reportId, List<ReportParameters> reportParameters);
+    Task<string> GetReportAsCsv(int? reportId, List<ReportParameters> reportParameters);
 }

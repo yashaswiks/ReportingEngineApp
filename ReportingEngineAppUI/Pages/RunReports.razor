@@ -11,8 +11,22 @@
         {
         <div class="form-group">
             <label>@param.ParameterLabel</label>
-            <input class="form-control" @bind-value="param.ParameterValue" type="@param.DataType" />
-        </div>
+                @if (param.DisplayType == ParameterFormatType.Date_Type)
+                {
+                    <input class="form-control" @bind-value="param.ParameterValue" type="@param.DataType" />
+                }
+                else if(param.DisplayType == ParameterFormatType.Select_Type)
+                {
+                    <a>XOXOX</a>
+                    <select class="form-control" @bind="param.ParameterValue"
+                            type="@param.DataType">
+                            @foreach(var item in param.SelectOptions)
+                            {
+                                <option value="@item">@item</option>
+                            }
+                    </select>
+                }
+            </div>
         }
     </div>
 
@@ -26,7 +40,9 @@
     [Inject]
     public IReportEngineReportParameterMappingRepository? _reportParameterMappingRepository { get; set; }
     [Inject]
-    public IReportingEngineReportsRepository _reportsEngine { get; set; }
+    public IReportingEngineReportsRepository? _reportsEngine { get; set; }
+    [Inject]
+    public IReportingEngineParameterRepository? _reportEngineParametersRepository { get; set; }
 
 
     public List<FullReportEngineReportParameterMappingModel>? ReportParameters { get; set; } = new();
@@ -42,6 +58,17 @@
             Parameters = new();
             foreach(var item in ReportParameters)
             {
+                List<string> selectOptions = new();
+                if(item?.Parameter?.DisplayType != ParameterFormatType.Select_Type)
+                {
+                    selectOptions = null;
+                }
+                else
+                {
+                    selectOptions = await _reportEngineParametersRepository?
+                    .GetReportSelectOptions((int)item.ParameterId);
+                }
+
 
                 Parameters.Add(new ReportParameters()
                 {
@@ -49,7 +76,9 @@
                     ReportId = (int)item.ReportId,
                     ParameterVariable = item.Parameter?.ParameterVariable,
                     ParameterLabel = item.Parameter?.ParameterLabel,
-                    DataType = item.Parameter?.FormatType
+                    DataType = item.Parameter?.FormatType,
+                    DisplayType = item.Parameter?.DisplayType,
+                    SelectOptions = selectOptions
                 });
             }
         }
@@ -58,7 +87,7 @@
     public async Task Test()
     {
         var test = Parameters;
-        await _reportsEngine.Test(ReportId, Parameters);
+        await _reportsEngine.GetReportAsCsv(ReportId, Parameters);
     }
 
 }
