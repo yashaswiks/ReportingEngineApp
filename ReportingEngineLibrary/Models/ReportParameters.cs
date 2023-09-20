@@ -18,10 +18,10 @@ public class ReportParameters
     public List<string> SelectOptions { get; set; } = new();
 }
 
-public static class ParameterFormatType
+public static class DisplayType
 {
     public const string Date_Type = "date";
-    public const string String_Type = "string";
+    public const string Text_Type = "text";
     public const string Number_Type = "number";
     public const string Select_Type = "select";
 }

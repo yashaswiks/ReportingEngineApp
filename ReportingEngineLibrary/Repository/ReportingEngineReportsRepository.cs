@@ -56,7 +56,7 @@ public class ReportingEngineReportsRepository : IReportingEngineReportsRepositor
         {
             foreach (var parameter in reportParameters!)
             {
-                if (parameter.DataType == ParameterFormatType.Date_Type)
+                if (parameter.DataType == DisplayType.Date_Type)
                     param.Add(parameter.ParameterVariable, DateTime.Parse(parameter.ParameterValue));
                 else
                     param.Add(parameter.ParameterVariable, parameter.ParameterValue);

@@ -11,13 +11,8 @@
         {
         <div class="form-group">
             <label>@param.ParameterLabel</label>
-                @if (param.DisplayType == ParameterFormatType.Date_Type)
+                @if(param.DisplayType == DisplayType.Select_Type)
                 {
-                    <input class="form-control" @bind-value="param.ParameterValue" type="@param.DataType" />
-                }
-                else if(param.DisplayType == ParameterFormatType.Select_Type)
-                {
-                    <a>XOXOX</a>
                     <select class="form-control" @bind="param.ParameterValue"
                             type="@param.DataType">
                             @foreach(var item in param.SelectOptions)
@@ -25,6 +20,10 @@
                                 <option value="@item">@item</option>
                             }
                     </select>
+                }
+                else
+                {
+                    <input class="form-control" @bind-value="param.ParameterValue" type="@param.DataType" />
                 }
             </div>
         }
@@ -59,7 +58,7 @@
             foreach(var item in ReportParameters)
             {
                 List<string> selectOptions = new();
-                if(item?.Parameter?.DisplayType != ParameterFormatType.Select_Type)
+                if(item?.Parameter?.DisplayType != DisplayType.Select_Type)
                 {
                     selectOptions = null;
                 }
